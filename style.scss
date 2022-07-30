@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css?family=Concert+One|Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Merienda+One');
+$font-family: 'Merienda One', cursive;
+$colors: #725ac1, #00a6fb, #f50057, #ffc107;
+$timingFunction:linear;
+
+.container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  .spikes {
+    position: absolute;
+    height: 50%;
+    width: 0.5rem;
+    top: 5;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transform-origin: bottom;
+    box-sizing: border-box;
+    span {
+      width: 100%;
+      background-color: green;
+      position: absolute;
+      display: inline-flex;
+      left: 0;
+      right: 0;
+      margin: auto;
+      border-radius: 400px;
+      border-radius: 40px;
+    }
+    @for $j from 1 through 4 {
+      span:nth-child(#{$j}) {
+        animation: moveOut-#{$j} 1s $timingFunction infinite;
+        animation-delay: #{$j*0.25}s;
+        border-radius: 0px;
+        width: 0.5rem;
+        bottom:#{$j * 5%};
+        height:#{$j*0.5}rem;
+        opacity:0;
+        border-radius:0.5rem;
+      }
+    }
+
+    @each $color in $colors {
+      $index: index($colors, $color);
+      span:nth-child(#{$index}) {
+        background-color: $color;
+      }
+    }
+  }
+  @for $i from 1 through 61 {
+    .spikes:nth-child(#{$i}) {
+      transform:rotate(#{$i*6deg});
+    }
+  }
+
+@for $k from 1 through 4 {
+  @keyframes moveOut-#{$k} {
+    0%
+   {
+     bottom:200%;
+      opacity:1;
+      transform: translateX(-50%) scale(1.5);
+    }
+     100% {
+      bottom:100%;
+      opacity: 0.2;
+      transform: translateX(-50%) scale(0.1);
+    }
+  }
+}
+
+body{
+ background: radial-gradient(ellipse at center, rgba(213,184,255,1) 0%,rgba(165,55,188,1) 100%);
+  perspective: 1000px;
+  display: flex;
+  transform-style: preserve-3d;
+  font-family: "Pacifico",cursive;
+}
+.card{
+  top: 20vh;
+  pointer-events: none;
+  transform: translateZ(7em);
+  padding: 30px;
+  background: linear-gradient(to bottom, #020333 0%,#020333 75%,#ffffff 75%,#ffffff 100%);
+  
+  border-radius: 5px;
+  width: 400px;
+  height: 250px;
+  margin: auto;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  display: flex;
+  box-shadow: 0 0 5px rgba(0,0,0,.1);
+  position: relative;
+  
+  &:after{
+    content:" ";
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    border-radius: 50%;
+    left:0;
+    bottom:-50px;
+    box-shadow: 0 30px 20px rgba(0,0,0,.3);
+    
+  }
+
+  .card-content{
+    margin: auto;
+    text-align:center;
+    transform-style: preserve-3d;
+  
+  }
+  h1{
+    transform: translateZ(100px);
+    color: #e0e0c8;
+    font-size: 2.7em;
+    font-weight: 400;
+  }
+
+  p{
+    transform: translateZ(50px);
+    color: #dc7532;
+    font-size: 1.7em;
+    display: block;
+    
+  }
+    .related{
+      transform: translateZ(90px);
+      color: #c04f87;
+      font-size: 1.2em;
+      font-family: 'Concert One', cursive;
+      font-weight: 400;
+    }
+  
+  a{
+    color:#dc7532;
+    pointer-events: auto;
+    } 
+  }
+
+$colors: #F38181, #FCE38A, #EAFFD0, #95E1D3;
+
+bokeh {
+  position: fixed;
+  width: 5vmin;
+  height: 5vmin;
+  border-radius: 50%;
+  animation-name: explosion;
+  animation-iteration-count: infinite;
+  animation-direction: reverse;
+  animation-timing-function: cubic-bezier(0.84, 0.02, 1, 1);
+  @for $i from 1 through 100 {
+    &:nth-child(#{$i}) {
+      $color: ceil(random() * 4);
+      background-color: nth($colors, $color);
+      $x: random() * 100vw;
+      $y: random() * 100vh;
+      transform: translate($x, $y);
+      animation-duration: random() * 3s + 2s;
+      animation-delay: random() * -2s;
+    }
+  }
+}
+@keyframes explosion {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(50vw, 50vh);
+  }
+}
